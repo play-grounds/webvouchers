@@ -204,7 +204,8 @@
   console.log(decoded)
   render(
     html`
-      <div>Decoded: ${decoded}</div>
+      <div>Bech32: ${address}</div>
+      <div>Decoded: <a target="_blank" href="${decoded}">${decoded}</a></div>
     `,
     document.body
   )
