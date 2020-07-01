@@ -5,6 +5,7 @@
 </script>
 <script type="module">
   import 'https://unpkg.com/dior'
+  import { h, html, render, Component } from 'https://jspm.dev/spux'
 
   var address = di.data['@id'] || qs.uri
 
@@ -201,4 +202,10 @@
   )
 
   console.log(decoded)
+  render(
+    html`
+      <div>Decoded: ${decoded}</div>
+    `,
+    document.body
+  )
 </script>
