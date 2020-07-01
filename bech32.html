@@ -7,7 +7,7 @@
   import 'https://unpkg.com/dior'
   import { h, html, render, Component } from 'https://unpkg.com/spux?module'
 
-  var address = di.data['@id'] || qs.uri
+  var address = qs.uri || di.data['@id'] || qs.uri
 
   var bech32 = (() => {
     var ALPHABET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l'
