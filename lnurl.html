@@ -35,6 +35,15 @@
           </div>
           <h2>JSON</h2>
           <pre>${JSON.stringify(json, null, 2)}</pre>
+          <h2>Withdrawal</h2>
+
+          To withdraw to a Payment Request (invoice). Take callback add k1=k1
+          above pr=invoice
+          <br />
+
+          <a href="${json.callback + '?k1=' + json.k1 + '&pr='}"
+            >${json.callback + '?k1=' + json.k1 + '&pr='}</a
+          >
         `,
         document.body
       )
