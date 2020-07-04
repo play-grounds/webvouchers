@@ -1,0 +1,35 @@
+<script type="application/ld+json" id="data">
+  {
+    "@id": "LNURL1DP68GURN8GHJ7MRWVF5HGUEWVDHK6TMHD96XSERJV9MJ7CTSDYHHVVF0D3H82UNV9AJRVAJC2PQK2EZJXAXKYSN4VCMKXCMRVDX4ZVSUCTP"
+  }
+</script>
+<script type="module">
+  import 'https://unpkg.com/dior'
+  import { h, html, render, Component } from 'https://unpkg.com/spux?module'
+  import bech32 from 'https://unpkg.com/lnurljs/bech32.js'
+
+  var address = qs.uri || di.data['@id'] || qs.uri
+
+  var decoded = String.fromCharCode(
+    ...bech32.fromWords(bech32.decode(address, 1000).words)
+  )
+  console.log(decoded)
+
+  fetch(decoded)
+    .then(response => response.json())
+    .then(json => {
+      globalThis.json = json
+      console.log(json)
+
+      render(
+        html`
+          <div>Bech32: ${address}</div>
+          <div>
+            Decoded: <a target="_blank" href="${decoded}">${decoded}</a>
+          </div>
+          <pre>JSON:${JSON.stringify(json, null, 2)}</pre>
+        `,
+        document.body
+      )
+    })
+</script>
