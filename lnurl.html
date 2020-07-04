@@ -1,9 +1,25 @@
 <link rel="stylesheet" href="https://spux.org/css/spux.css" />
 
 <script type="application/ld+json" id="data">
-  {
-    "@id": "LNURL1DP68GURN8GHJ7MRWVF5HGUEWVDHK6TMHD96XSERJV9MJ7CTSDYHHVVF0D3H82UNV9AJKS5TXF34HGA64DFV5VU2HFE2RJ7PCW3E8Z0EQJRJ"
-  }
+  [
+    {
+      "@id": "",
+      "mainEntity": "LNURL1DP68GURN8GHJ7MRWVF5HGUEWVDHK6TMHD96XSERJV9MJ7CTSDYHHVVF0D3H82UNV9AJKS5TXF34HGA64DFV5VU2HFE2RJ7PCW3E8Z0EQJRJ"
+    },
+    {
+      "@id": "LNURL1DP68GURN8GHJ7MRWVF5HGUEWVDHK6TMHD96XSERJV9MJ7CTSDYHHVVF0D3H82UNV9AJKS5TXF34HGA64DFV5VU2HFE2RJ7PCW3E8Z0EQJRJ",
+      "bech32Decoded": "https://lnbits.com/withdraw/api/v1/lnurl/ehQfLktwUjYFqWNT9x8trq"
+    },
+    {
+      "@id": "https://lnbits.com/withdraw/api/v1/lnurl/ehQfLktwUjYFqWNT9x8trq",
+      "callback": "https://lnbits.com/withdraw/api/v1/lnurl/cb/ehQfLktwUjYFqWNT9x8trq",
+      "defaultDescription": "#withdraw LNbits LNURL",
+      "k1": "oWvEENZvQz5xjVRR9nKhkJ",
+      "maxWithdrawable": 100000,
+      "minWithdrawable": 100000,
+      "tag": "withdrawRequest"
+    }
+  ]
 </script>
 <script type="module">
   import 'https://unpkg.com/dior'
@@ -11,7 +27,7 @@
   import bech32 from 'https://unpkg.com/lnurljs/bech32.js'
   import Navbar from 'https://unpkg.com/spux-components/Navbar.js'
 
-  var address = qs.uri || di.data['@id'] || qs.uri
+  var address = qs.uri || di.data[1]['@id'] || qs.uri
 
   var decoded = String.fromCharCode(
     ...bech32.fromWords(bech32.decode(address, 1000).words)
