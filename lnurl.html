@@ -1,12 +1,15 @@
+<link rel="stylesheet" href="https://spux.org/css/spuxblue.css" />
+
 <script type="application/ld+json" id="data">
   {
-    "@id": "LNURL1DP68GURN8GHJ7MRWVF5HGUEWVDHK6TMHD96XSERJV9MJ7CTSDYHHVVF0D3H82UNV9AJRVAJC2PQK2EZJXAXKYSN4VCMKXCMRVDX4ZVSUCTP"
+    "@id": "LNURL1DP68GURN8GHJ7MRWVF5HGUEWVDHK6TMHD96XSERJV9MJ7CTSDYHHVVF0D3H82UNV9AJKS5TXF34HGA64DFV5VU2HFE2RJ7PCW3E8Z0EQJRJ"
   }
 </script>
 <script type="module">
   import 'https://unpkg.com/dior'
   import { h, html, render, Component } from 'https://unpkg.com/spux?module'
   import bech32 from 'https://unpkg.com/lnurljs/bech32.js'
+  import Navbar from 'https://unpkg.com/spux-components/Navbar.js'
 
   var address = qs.uri || di.data['@id'] || qs.uri
 
@@ -23,11 +26,15 @@
 
       render(
         html`
-          <div>Bech32: ${address}</div>
+          <${Navbar} title="lnurl" />
+          <h2>Bech32</h2>
+          <div>${address}</div>
+          <h2>Decoded</h2>
           <div>
             Decoded: <a target="_blank" href="${decoded}">${decoded}</a>
           </div>
-          <pre>JSON:${JSON.stringify(json, null, 2)}</pre>
+          <h2>JSON</h2>
+          <pre>${JSON.stringify(json, null, 2)}</pre>
         `,
         document.body
       )
