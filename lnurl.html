@@ -27,23 +27,25 @@
       render(
         html`
           <${Navbar} title="lnurl" />
-          <h2>Bech32</h2>
-          <div>${address}</div>
-          <h2>Decoded</h2>
-          <div>
-            <a target="_blank" href="${decoded}">${decoded}</a>
+          <div class="row">
+            <h2>Bech32</h2>
+            <div>${address}</div>
+            <h2>Decoded</h2>
+            <div>
+              <a target="_blank" href="${decoded}">${decoded}</a>
+            </div>
+            <h2>JSON</h2>
+            <pre>${JSON.stringify(json, null, 2)}</pre>
+            <h2>Withdrawal</h2>
+
+            To withdraw to a Payment Request (invoice). Take callback add k1=k1
+            above pr=invoice
+            <br />
+
+            <a href="${json.callback + '?k1=' + json.k1 + '&pr='}"
+              >${json.callback + '?k1=' + json.k1 + '&pr='}</a
+            >
           </div>
-          <h2>JSON</h2>
-          <pre>${JSON.stringify(json, null, 2)}</pre>
-          <h2>Withdrawal</h2>
-
-          To withdraw to a Payment Request (invoice). Take callback add k1=k1
-          above pr=invoice
-          <br />
-
-          <a href="${json.callback + '?k1=' + json.k1 + '&pr='}"
-            >${json.callback + '?k1=' + json.k1 + '&pr='}</a
-          >
         `,
         document.body
       )
