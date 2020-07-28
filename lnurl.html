@@ -31,69 +31,99 @@
   import Navbar from 'https://unpkg.com/spux-components/Navbar.js'
 
   // init
+
+  // init document
+  globalThis.defaults = {}
+  globalThis.spux = { ...defaults, ...di.data, ...qs }
+
+  // init address
   var address = qs.uri || di.data[1]['@id'] || qs.uri
   address = address.split(':').pop()
 
+  // init bech32 decoded address
   var decoded = String.fromCharCode(
     ...bech32.fromWords(bech32.decode(address, 1000).words)
   )
-  console.log(decoded)
+  console.log('decoded', decoded)
+
+  // init json
+  globalThis.json = {}
 
   // fetch
-  fetch(decoded)
-    .then(response => response.json())
-    .then(json => {
-      globalThis.json = json
-      console.log(json)
+  function fetchAll () {
+    fetch(decoded)
+      .then(response => response.json())
+      .then(json => {
+        globalThis.json = json
+        console.log('json', json)
 
-      main()
-    })
-
-  // Components
-  const LnurlWithdrawal = () =>
-    html`
-      <textarea cols="80">${address}</textarea>
-    `
-
-  const LnurlWithdrawalDecoded = () => html`
-    <div>
-      <a target="_blank" href="${decoded}">${decoded}</a>
-    </div>
-  `
-
-  const LnurlWithdrawalDecodedJSON = () => {
-    return html`
-      <pre>${JSON.stringify(json, null, 2)}</pre>
-    `
+        renderAll()
+      })
   }
-
-  const Invoice = () => html`
-    <textarea cols="80">${json.callback + '?k1=' + json.k1 + '&pr='}</textarea>
-  `
 
   // App
-  const App = () => html`
-    <${Navbar} title="lnurl" />
-    <div class="row">
-      <h2>Bech32</h2>
-      <${LnurlWithdrawal} />
-      <h2>Decoded</h2>
-      <${LnurlWithdrawalDecoded} />
-      <h2>JSON</h2>
-      <${LnurlWithdrawalDecodedJSON} />
+  class App extends Component {
+    constructor (props) {
+      super(props)
+    }
 
-      <h2>Withdrawal</h2>
+    render () {
+      // Components
+      const LnurlWithdrawal = () =>
+        html`
+          <textarea cols="80">${address}</textarea>
+        `
 
-      To withdraw to a Payment Request (invoice). Take callback add k1=k1 above
-      pr=invoice
-      <br />
+      const LnurlWithdrawalDecoded = () => html`
+        <div>
+          <a target="_blank" href="${decoded}">${decoded}</a>
+        </div>
+      `
 
-      <${Invoice} />
-    </div>
-  `
+      const LnurlWithdrawalDecodedJSON = () => {
+        return html`
+          <pre>${JSON.stringify(json, null, 2)}</pre>
+        `
+      }
 
-  function main () {
+      const Invoice = () => html`
+        <textarea cols="80">
+  ${json.callback + '?k1=' + json.k1 + '&pr='}</textarea
+        >
+      `
+
+      return html`
+        <${Navbar} title="lnurl" />
+        <div class="row">
+          <h2>Bech32</h2>
+          <${LnurlWithdrawal} />
+          <h2>Decoded</h2>
+          <${LnurlWithdrawalDecoded} />
+          <h2>JSON</h2>
+          <${LnurlWithdrawalDecodedJSON} />
+
+          <h2>Withdrawal</h2>
+
+          To withdraw to a Payment Request (invoice). Take callback add k1=k1
+          above pr=invoice
+          <br />
+
+          <${Invoice} />
+        </div>
+      `
+    }
+  }
+
+  // render
+  function renderAll () {
     render(h(App), document.body)
   }
+
+  // main
+  function main () {
+    fetchAll()
+  }
+
+  main()
 </script>
 <body></body>
