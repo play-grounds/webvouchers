@@ -44,12 +44,10 @@
       globalThis.json = json
       console.log(json)
 
-      render(
-        html`
-          <${Navbar} title="lnurl" />
+      const App = () => html`<${Navbar} title="lnurl" />
           <div class="row">
             <h2>Bech32</h2>
-            <div>${address}</div>
+            <textarea cols="80">${address}</textarea>
             <h2>Decoded</h2>
             <div>
               <a target="_blank" href="${decoded}">${decoded}</a>
@@ -65,8 +63,9 @@
             <a href="${json.callback + '?k1=' + json.k1 + '&pr='}"
               >${json.callback + '?k1=' + json.k1 + '&pr='}</a
             >
-          </div>
-        `,
+          </div>`
+
+      render(h(App),
         document.body
       )
     })
