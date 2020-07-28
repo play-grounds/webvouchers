@@ -30,6 +30,7 @@
   import bech32 from 'https://unpkg.com/lnurljs/bech32.js'
   import Navbar from 'https://unpkg.com/spux-components/Navbar.js'
 
+  // init
   var address = qs.uri || di.data[1]['@id'] || qs.uri
   address = address.split(':').pop()
 
@@ -38,35 +39,61 @@
   )
   console.log(decoded)
 
+  // fetch
   fetch(decoded)
     .then(response => response.json())
     .then(json => {
       globalThis.json = json
       console.log(json)
 
-      const App = () => html`<${Navbar} title="lnurl" />
-          <div class="row">
-            <h2>Bech32</h2>
-            <textarea cols="80">${address}</textarea>
-            <h2>Decoded</h2>
-            <div>
-              <a target="_blank" href="${decoded}">${decoded}</a>
-            </div>
-            <h2>JSON</h2>
-            <pre>${JSON.stringify(json, null, 2)}</pre>
-            <h2>Withdrawal</h2>
-
-            To withdraw to a Payment Request (invoice). Take callback add k1=k1
-            above pr=invoice
-            <br />
-
-            <a href="${json.callback + '?k1=' + json.k1 + '&pr='}"
-              >${json.callback + '?k1=' + json.k1 + '&pr='}</a
-            >
-          </div>`
-
-      render(h(App),
-        document.body
-      )
+      main()
     })
+
+  // Components
+  const LnurlWithdrawal = () =>
+    html`
+      <textarea cols="80">${address}</textarea>
+    `
+
+  const LnurlWithdrawalDecoded = () => html`
+    <div>
+      <a target="_blank" href="${decoded}">${decoded}</a>
+    </div>
+  `
+
+  const LnurlWithdrawalDecodedJSON = () => {
+    return html`
+      <pre>${JSON.stringify(json, null, 2)}</pre>
+    `
+  }
+
+  const Invoice = () => html`
+    <textarea cols="80">${json.callback + '?k1=' + json.k1 + '&pr='}</textarea>
+  `
+
+  // App
+  const App = () => html`
+    <${Navbar} title="lnurl" />
+    <div class="row">
+      <h2>Bech32</h2>
+      <${LnurlWithdrawal} />
+      <h2>Decoded</h2>
+      <${LnurlWithdrawalDecoded} />
+      <h2>JSON</h2>
+      <${LnurlWithdrawalDecodedJSON} />
+
+      <h2>Withdrawal</h2>
+
+      To withdraw to a Payment Request (invoice). Take callback add k1=k1 above
+      pr=invoice
+      <br />
+
+      <${Invoice} />
+    </div>
+  `
+
+  function main () {
+    render(h(App), document.body)
+  }
 </script>
+<body></body>
